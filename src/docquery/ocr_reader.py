@@ -3,7 +3,7 @@ import logging
 from typing import Any, List, Optional, Tuple
 
 import numpy as np
-from pydantic.fields import ModelField
+
 
 
 class NoOCRReaderFound(Exception):
@@ -58,11 +58,10 @@ class OCRReader(metaclass=SingletonMeta):
     def __get_validators__(cls):
         yield cls.validate
 
-    @classmethod
-    def validate(cls, v, field: ModelField):
-        if not isinstance(v, cls):
-            raise TypeError("Invalid value")
-        return v
+    
+    def validate(cls, v):return v
+      
+        
 
     @abc.abstractmethod
     def apply_ocr(self, image: "Image.Image") -> Tuple[List[Any], List[List[int]]]:
